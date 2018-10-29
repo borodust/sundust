@@ -49,12 +49,34 @@
 
 (define-image :random_dialog3 "random_dialog3.png")
 
+(define-image :horn "horn.png")
+
+
 
 (define-image :ui_dialog_window "ui_dialog_window.png")
 
+(define-image :ui_dialog_choice "ui_dialog_window.png")
 
+
+(define-image :sundust_logo "sundust_logo.png")
+
+
+(define-sound :start-music "Deep_Haze.ogg")
 
 (defmethod fistmage:button-pressed ((this start-state) (button (eql :mouse-left)))
+  (fistmage:transition-to 'state-1))
+
+(defmethod fistmage:draw ((this start-state))
+  (draw-image (vec2 0 0) :sundust_logo)
+  (play-sound :start-music :looped-p t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defclass state-1()
+  ((started-at :initform (real-time-seconds))))
+
+
+
+(defmethod fistmage:button-pressed ((this state-1) (button (eql :mouse-left)))
   (fistmage:transition-to 'state-2))
 
 (define-font :fonty "../Poppins-Regular.ttf")
@@ -62,13 +84,17 @@
 
 
 (defparameter *fancy-font* nil)
-(defmethod initialize-instance :after ((this start-state) &key)
+(defmethod initialize-instance :after ((this state-1) &key)
   (setf *fancy-font* (make-font :fonty 36)))
 
-(defparameter *font-color* (vec4 0.3 0.3 0.2 1))
+(defparameter *font-color* (vec4 0.14 0.1249 0.14 1))
+
+(defparameter *green-color* (vec4 0.13261 0.67879 0.16953 1))
+
+(defparameter *orange-color* (vec4 0.98987214 0.56137 0.243 1))
 
 
-(defmethod fistmage:draw ((this start-state))
+(defmethod fistmage:draw ((this state-1))
   (draw-image (vec2 0 0) :cult_outdoors)
   (draw-image (vec2 510 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
@@ -76,7 +102,9 @@
   (draw-text "Damn, damn, damn. I was looking for her for weeks, maybe" (vec2 209 97) :font *fancy-font* :fill-color *font-color*)
   (draw-text "even months." (vec2 209 65) :font *fancy-font* :fill-color *font-color*))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 
 (defclass state-2 ()
@@ -150,6 +178,7 @@
 (defmethod fistmage:draw ((this state-5))
   (draw-image (vec2 0 0) :cult_outdoors)
   (draw-image (vec2 800 0) :lem_dialog)
+  (draw-image (vec2 550 280) :horn)
   (draw-image (vec2 200 0) :dys_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Dys - past]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
@@ -171,6 +200,7 @@
 (defmethod fistmage:draw ((this state-6))
   (draw-image (vec2 0 0) :cult_outdoors)
   (draw-image (vec2 800 0) :lem_dialog)
+    (draw-image (vec2 550 280) :horn)
   (draw-image (vec2 200 0) :dys_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Dys - past]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
@@ -1769,8 +1799,8 @@
 (defmethod fistmage:draw ((this state-78))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Underground's inhabitant]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "What an abomination!" (vec2 209 97) :font *fancy-font* :fill-color *font-color*))
@@ -1789,8 +1819,8 @@
 (defmethod fistmage:draw ((this state-79))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Slimene]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "\\blob... do I... really look like an abomination?\\" (vec2 209 97) :font *fancy-font* :fill-color *font-color*))
@@ -1809,8 +1839,8 @@
 (defmethod fistmage:draw ((this state-80))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog2)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Underground's inhabitant]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "If it eats my children, who will be responsible?!" (vec2 209 97) :font *fancy-font* :fill-color *font-color*))
@@ -1829,8 +1859,8 @@
 (defmethod fistmage:draw ((this state-81))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog2)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Slimene]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "\\I won't ''eat'' anyone! I swear! I haven't for a long time...\\" (vec2 209 97) :font *fancy-font* :fill-color *font-color*))
@@ -1849,8 +1879,8 @@
 (defmethod fistmage:draw ((this state-82))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog3)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Underground's inhabitant]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "Priests are looking for this freaking beast. They'll come" (vec2 209 97) :font *fancy-font* :fill-color *font-color*)
@@ -1870,8 +1900,8 @@
 (defmethod fistmage:draw ((this state-83))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog3)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Lem]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "What if we give you... more water and seeds? May we stay" (vec2 209 97) :font *fancy-font* :fill-color *font-color*)
@@ -1891,8 +1921,8 @@
 (defmethod fistmage:draw ((this state-84))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog2)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Underground's inhabitant]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "Well... okay. But we will be watching you two." (vec2 209 97) :font *fancy-font* :fill-color *font-color*)
@@ -1912,8 +1942,8 @@
 (defmethod fistmage:draw ((this state-85))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog2)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Underground's inhabitant]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "Well... okay. But we will be watching you two. Especially" (vec2 209 97) :font *fancy-font* :fill-color *font-color*)
@@ -1933,8 +1963,8 @@
 (defmethod fistmage:draw ((this state-86))
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 150 0) :random_dialog3)
-  (draw-image (vec2 510 0) :lem_dialog)
-  (draw-image (vec2 650 0) :slimene_dialog)
+  (draw-image (vec2 300 0) :slimene_dialog)
+  (draw-image (vec2 650 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
   (draw-text "[Underground's inhabitant]" (vec2 209 135) :font *fancy-font* :fill-color *font-color*)
   (draw-text "Just leave already. I can't stand this blob's, urgh.." (vec2 209 97) :font *fancy-font* :fill-color *font-color*))
@@ -2451,8 +2481,11 @@
   (draw-image (vec2 0 0) :underground)
   (draw-image (vec2 510 0) :lem_dialog)
   (draw-image (vec2 147 16) :ui_dialog_window)
-  (draw-text "> PRESS A TO SAVE SLIMENE <" (vec2 480 120) :font *fancy-font* :fill-color *font-color*)
-  (draw-text "> PRESS D TO KILL SLIMENE <" (vec2 488 80) :font *fancy-font* :fill-color *font-color*))
+  (draw-text ">>PRESS" (vec2 200 100) :font *fancy-font* :fill-color *font-color*)
+  (draw-text "'A' TO SAVE SLIMENE" (vec2 312 100) :font *fancy-font* :fill-color *orange-color*)
+  (draw-text ">>PRESS" (vec2 745 100) :font *fancy-font* :fill-color *font-color*)
+    (draw-text "'D' TO KILL SLIMENE" (vec2 860 100) :font *fancy-font* :fill-color *green-color*)
+	)
 
 
 ;;;;;;;;;;;УБИТЬ СЛАЙМИН;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2680,7 +2713,7 @@
 
 
 (defmethod fistmage:button-pressed ((this state-512) (button (eql :mouse-left)))
-  (fistmage:transition-to 'start-state))
+  (fistmage:transition-to 'end_screen))
 
 
 (defmethod fistmage:draw ((this state-511))
@@ -4283,9 +4316,10 @@
   (draw-image (vec2 0 0) :cult_corridors)
   (draw-image (vec2 410 0) :slimene_dialog2)
   (draw-image (vec2 147 16) :ui_dialog_window)
-  (draw-text "> PRESS A TO SHOW THEM THE DEITY'S WRATH <" (vec2 355 120) :font *fancy-font* :fill-color *font-color*)
-  (draw-text "> PRESS D TO LEAVE <" (vec2 510 80) :font *fancy-font* :fill-color *font-color*))
-
+  (draw-text ">>PRESS" (vec2 200 100) :font *fancy-font* :fill-color *font-color*)
+  (draw-text "'A' TO KILL CULTISTS" (vec2 312 100) :font *fancy-font* :fill-color *orange-color*)
+  (draw-text ">>PRESS" (vec2 810 100) :font *fancy-font* :fill-color *font-color*)
+    (draw-text "'D' TO LEAVE" (vec2 920 100) :font *fancy-font* :fill-color *green-color*))
 
 
 
@@ -4433,12 +4467,12 @@
 
 
 (defmethod fistmage:button-pressed ((this state-308) (button (eql :mouse-left)))
-  (fistmage:transition-to 'start-state))
+  (fistmage:transition-to 'end_screen))
 
 
 (defmethod fistmage:draw ((this state-308))
   (draw-rect (vec2 0 0) 1280 720 :fill-paint (vec4 0 0 0 1))
-  (draw-text "END: CULT" (vec2 330 350) :font *title-font* :fill-color *title-color*)
+  (draw-text "END: CULT" (vec2 460 350) :font *title-font* :fill-color *title-color*)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -4661,7 +4695,7 @@
 (defmethod fistmage:draw ((this state-411))
   (draw-rect (vec2 0 0) 1280 720 :fill-paint (vec4 0 0 0 1))
   (draw-text "It seems Slimene isn't alone anymore." (vec2 380 400) :font *fancy-font* :fill-color *title-color*)
-  (draw-text "She'll never be alone again." (vec2 440 300) :font *fancy-font* :fill-color *title-color*)
+  (draw-text "They'll never be alone again." (vec2 440 300) :font *fancy-font* :fill-color *title-color*)
   )
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -4672,10 +4706,30 @@
 
 
 (defmethod fistmage:button-pressed ((this state-412) (button (eql :mouse-left)))
-  (fistmage:transition-to 'start-state))
+  (fistmage:transition-to 'end_screen))
 
 
 (defmethod fistmage:draw ((this state-412))
   (draw-rect (vec2 0 0) 1280 720 :fill-paint (vec4 0 0 0 1))
-  (draw-text "GOOD END" (vec2 330 350) :font *title-font* :fill-color *title-color*)
+  (draw-text "REUNION END" (vec2 410 350) :font *title-font* :fill-color *title-color*)
+  )
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defclass end_screen ()
+  ((started-at :initform (real-time-seconds))))
+
+
+(defmethod fistmage:button-pressed ((this end_screen) (button (eql :mouse-left)))
+  (fistmage:transition-to 'state-1))
+
+
+(defmethod fistmage:draw ((this end_screen))
+  (draw-image (vec2 0 0) :sundust_logo)
+  (draw-text "made by" (vec2 900 160) :font *fancy-font* :fill-color *font-color*)
+    (draw-text "Kris Soulmate" (vec2 930 130) :font *fancy-font* :fill-color *font-color*)
+    (draw-text "Nate Grigoriadi" (vec2 930 100) :font *fancy-font* :fill-color *font-color*)
+  (draw-text "Laisarre" (vec2 930 70) :font *fancy-font* :fill-color *font-color*)
+  (draw-text "Kevin MacLeod (music)" (vec2 930 40) :font *fancy-font* :fill-color *font-color*)
   )
